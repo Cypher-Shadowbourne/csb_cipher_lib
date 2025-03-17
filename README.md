@@ -70,8 +70,8 @@
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository_url>
-   cd <repository_folder>
+   git clone (ttps://github.com/Cypher-Shadowbourne/csb_cipher_lib
+   cd csb_ciper_lib
 Install the Package:
 bash
 Copy
