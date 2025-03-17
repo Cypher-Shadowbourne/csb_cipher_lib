@@ -10,6 +10,7 @@ setup(
     install_requires=[
         "argon2-cffi",  # required for key derivation
     ],
+    python_requires=">=3.6",  # Require Python 3.6 or newer
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
