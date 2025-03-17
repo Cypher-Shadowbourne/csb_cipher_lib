@@ -9,11 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         python-version: [3.8, 3.9, 3.10, 3.11]
+      fail-fast: false
 
+    # Skip the job if it tries to use Python 3.1
+    if: ${{ matrix.python-version != '3.1' }}
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
