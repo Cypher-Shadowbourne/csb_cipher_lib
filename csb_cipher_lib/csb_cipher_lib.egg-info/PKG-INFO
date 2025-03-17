@@ -1,0 +1,14 @@
+Metadata-Version: 2.2
+Name: csb_cipher_lib
+Version: 0.1.0
+Summary: A Python library implementing the Shadowbourne (CSB) cipher and key management.
+Author: Your Name
+Author-email: your.email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Dist: argon2-cffi
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: requires-dist
+Dynamic: summary

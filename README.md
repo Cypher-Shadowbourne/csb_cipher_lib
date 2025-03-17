@@ -1,6 +1,6 @@
 # csb_cipher_lib
 
- (also known as the CSB cipher) along with key management using Argon2 for secure password-based key derivation. This library provides a unified interface for multiple encryption modes including:
+**csb_cipher_lib** is a Python cryptographic library that implements the Shadowbourne cipher (also known as the CSB cipher) along with key management using Argon2 for secure password-based key derivation. This library provides a unified interface for multiple encryption modes including:
 
 - **CSB** – Custom Shadowbourne mode with MAC-based authentication  
 - **ECB** – Electronic Code Book mode  
@@ -11,7 +11,7 @@
 > **Note:** While this library implements its own custom cipher (CSB mode), it also provides implementations for common modes (ECB, CBC, CTR, GCM) using the underlying Shadowbourne block functions.
 
 ---
-**csb_cipher_lib** is a Python cryptographic library that implements the Shadowbourne cipher
+
 ## Table of Contents
 
 1. [Overview](#overview)
@@ -36,17 +36,17 @@
 
 ## Overview
 
-**csb_cipher_lib** implements the Shadowbourne cipher, a custom encryption algorithm built on a Feistel network with a unique round function. In addition to the CSB mode (with built-in authentication via HMAC), the library supports other modes (ECB, CBC, CTR, and GCM) to give you flexibility in how you encrypt your data. Secure key management is provided through random key generation and password-based key derivation with Argon2.
+**csb_cipher_lib** implements the Shadowbourne cipher—a custom encryption algorithm built on a Feistel network with a unique round function. In addition to the CSB mode (which provides built-in authentication via HMAC), the library supports other modes (ECB, CBC, CTR, and GCM) to give you flexibility in how you encrypt your data. Secure key management is provided through random key generation and password-based key derivation using Argon2.
 
 ---
 
 ## Features
 
 - **Custom Encryption (CSB Mode):**  
-  Leverages a Feistel network with a custom round function for encryption, with built-in message authentication.
-  
+  Utilizes a Feistel network with a custom round function and provides message authentication.
+
 - **Multiple Modes:**  
-  In addition to CSB mode, the library supports standard modes:
+  Supports standard encryption modes:
   - **ECB (Electronic Code Book)**
   - **CBC (Cipher Block Chaining)**
   - **CTR (Counter)**
@@ -55,31 +55,29 @@
 - **Key Management:**  
   - Generate random keys.
   - Derive keys from passwords securely using Argon2.
-  
-- **Type and Input Validation:**  
-  Ensures that plaintext, ciphertext, and keys are provided as bytes, raising informative errors if not.
-  
+
+- **Input Validation:**  
+  Ensures that plaintext, ciphertext, and keys are provided as bytes, raising clear errors when they are not.
+
 - **Comprehensive Testing:**  
-  An extensive test suite covers encryption cycles, parameter variations, edge cases, input type errors, and avalanche effects.
+  An extensive test suite covers encryption cycles, edge cases, parameter variations, and even avalanche effects.
 
 ---
 
 ## Installation
 
-### Installing from Source (Editable Mode)
+### From Source (Editable Mode)
 
 1. **Clone the Repository:**
-
    ```bash
    git clone <repository_url>
    cd <repository_folder>
 Install the Package:
-
 bash
 Copy
 pip install -e .
 Future PyPI Installation
-When published, install via:
+When published, you can install via:
 
 bash
 Copy
@@ -102,14 +100,12 @@ print("Ciphertext (hex):", ciphertext.hex())
 decrypted = decrypt(ciphertext, key, rounds=64, block_size=16, mode="CSB", include_mac=True)
 print("Decrypted text:", decrypted.decode())
 Using Different Modes
-The unified interface allows you to select the encryption mode by passing the mode parameter. For example:
-
 python
 Copy
 from csb_cipher_lib import encrypt, decrypt, KeyManager
 
 key = KeyManager.generate_random_key(32)
-plaintext = b"Data to be encrypted in CBC mode."
+plaintext = b"Data to be encrypted in different modes."
 
 # Encrypt using CBC mode:
 ciphertext_cbc = encrypt(plaintext, key, rounds=64, block_size=16, mode="CBC", include_mac=True)
@@ -149,7 +145,7 @@ encrypted_data = encrypt(file_data, key, rounds=64, block_size=16, mode="CSB", i
 with open("example.txt.enc", "wb") as f:
     f.write(encrypted_data)
 
-# Decrypt the file later
+# Later, to decrypt the file:
 with open("example.txt.enc", "rb") as f:
     encrypted_data = f.read()
 
@@ -159,35 +155,30 @@ with open("example_decrypted.txt", "wb") as f:
 API Reference
 Shadowbourne Class
 __init__(self, key: bytes, rounds: int = 64, block_size: int = 16)
-Initializes the cipher with the specified key, number of rounds, and block size.
+Initializes the cipher with the given key, number of rounds, and block size.
 
 encrypt(self, plaintext: bytes, mode: str = "CSB", include_mac: bool = True) -> bytes
-Encrypts the plaintext using the specified mode. Supported modes include:
+Encrypts plaintext using one of the supported modes ("CSB", "ECB", "CBC", "CTR", or "GCM").
 
-"CSB" (default)
-"ECB"
-"CBC"
-"CTR"
-"GCM"
 decrypt(self, ciphertext: bytes, mode: str = "CSB", include_mac: bool = True) -> bytes
-Decrypts the ciphertext using the specified mode.
+Decrypts ciphertext using one of the supported modes.
 
 KeyManager Class
 derive_key_from_password(password: str, salt: bytes = None, key_size: int = 32) -> tuple
-Derives a key from a password using Argon2. Returns (key, salt).
+Derives a key from a password using Argon2. Returns a tuple (key, salt).
 
 generate_random_key(key_size: int = 32) -> bytes
 Generates a random key of the specified size.
 
 check_key_entropy(key: bytes, min_entropy_bits: int = 100) -> bool
-Checks if the key has at least the specified number of entropy bits.
+Checks if the key has sufficient entropy.
 
 Convenience Functions
 encrypt(plaintext: bytes, key: bytes, rounds: int = 64, block_size: int = 16, mode: str = "CSB", include_mac: bool = True) -> bytes
-A simple function that encrypts data using the Shadowbourne cipher with the chosen mode.
+Encrypts data using the Shadowbourne cipher. Returns the ciphertext.
 
 decrypt(ciphertext: bytes, key: bytes, rounds: int = 64, block_size: int = 16, mode: str = "CSB", include_mac: bool = True) -> bytes
-A simple function that decrypts data using the Shadowbourne cipher with the chosen mode.
+Decrypts data using the Shadowbourne cipher. Returns the plaintext.
 
 Running Tests
 A comprehensive test suite is provided using pytest.
